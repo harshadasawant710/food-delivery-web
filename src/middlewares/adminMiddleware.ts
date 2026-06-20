@@ -3,7 +3,7 @@ import HTTP_STATUS from "../constants/HttpStatus";
 import MESSAGES from "../constants/Messages";
 import ApiResponse from "../utils/ApiResponse";
 
-const resOwnerMiddleware = (req: any, res: Response, next: NextFunction) => {
+const adminMiddleware = (req: any, res: Response, next: NextFunction) => {
   try {
     const user = req.user
     if (!user) {
@@ -14,19 +14,11 @@ const resOwnerMiddleware = (req: any, res: Response, next: NextFunction) => {
       );
     }
 
-    if (user.role !== "RES_OWNER") {
+    if (user.role !== "ADMIN") {
       return ApiResponse.error(
         res,
         HTTP_STATUS.FORBIDDEN,
-        "Only for RES_OWNER"
-      );
-    }
-
-    if (user.status !== "ACTIVE") {
-      return ApiResponse.error(
-        res,
-        HTTP_STATUS.FORBIDDEN,
-        "Your account is not active"
+        "Only for ADMIN"
       );
     }
 
@@ -40,4 +32,4 @@ const resOwnerMiddleware = (req: any, res: Response, next: NextFunction) => {
   }
 };
 
-export default resOwnerMiddleware;
+export default adminMiddleware;

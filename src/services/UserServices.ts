@@ -1,4 +1,4 @@
-import  MESSAGES  from "../constants/Messages";
+import MESSAGES from "../constants/Messages";
 import UserRepository from "../repositories/userRepository";
 import ConflictError from '../utils/errors/ConfilctError'
 import NotFoundError from '../utils/errors/NotFoundError'
@@ -48,31 +48,39 @@ class UserServices {
     async getAllUsers(filter = {}, options: any = {}) {
         const users = await this.userRepository.findAll(filter, options)
         return users
-       
+
     }
 
     async getUserByEmail(email: string) {
-            const user = await this.userRepository.findByEmail(email)
-            if (!user) {
-                throw new NotFoundError(MESSAGES.NOT_FOUND)
-            }
-            return user
+        const user = await this.userRepository.findByEmail(email)
+        if (!user) {
+            throw new NotFoundError(MESSAGES.NOT_FOUND)
+        }
+        return user
     }
 
     async updateUser(id: string, updateData: any) {
-            const user = await this.userRepository.updateById(id, updateData)
-            if (!user) {
-                throw new NotFoundError(MESSAGES.NOT_FOUND)
-            }
-            return user
+        const user = await this.userRepository.updateById(id, updateData)
+        if (!user) {
+            throw new NotFoundError(MESSAGES.NOT_FOUND)
+        }
+        return user
     }
 
     async deleteUser(id: string) {
-            const user = await this.userRepository.deleteById(id)
-            if (!user) {
-                throw new NotFoundError(MESSAGES.NOT_FOUND)
-            }
-            return user
+        const user = await this.userRepository.deleteById(id)
+        if (!user) {
+            throw new NotFoundError(MESSAGES.NOT_FOUND)
+        }
+        return user
+    }
+
+    async userStatus(id: string, updateData: any) {
+        const user = await this.userRepository.updateById(id, updateData)
+        if (!user) {
+            throw new NotFoundError(MESSAGES.NOT_FOUND)
+        }
+        return user
     }
 }
 

@@ -2,6 +2,7 @@ const MESSAGES = {
   // Success Messages
   CREATED: "Record created successfully!",
   UPDATED: "Record updated successfully!",
+  UPDATEDSTATUS: "Record Status updated successfully!",
   DELETED: "Record deleted successfully!",
   FETCHED: "Record fetched successfully!",
   FETCHED_ALL: "All Records fetched successfully!",

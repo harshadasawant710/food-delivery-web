@@ -113,6 +113,21 @@ class UserController {
         }
 
     });
+
+    updateUserStatus = AsyncHandler(async (req: Request, res: Response) => {
+        const id: string = req.params.id as string
+        const { status } = req.body;
+        const user = await this.userService.userStatus(id, {
+            status,
+        });
+
+        return ApiRespone.success(
+            res,
+            HTTP_STATUS.OK,
+            MESSAGES.UPDATEDSTATUS,
+            user
+        );
+    });
 }
 
 export default UserController
