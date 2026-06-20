@@ -1,0 +1,64 @@
+class BaseRepository {
+    public model: any;
+    constructor(model: any) {
+        this.model = model;
+    }
+    async findAll(filter = {}, options: any = {}) {
+        const { sort, limit, skip, populate, select } = options
+        let query = this.model.find(filter);
+
+        if (select) query = query.select(select)
+        if (sort) query = query.sort(sort)
+        if (limit) query = query.limit(limit)
+        if (skip) query = query.skip(skip)
+        if (populate) query = query.populate(populate)
+
+        return await query.exec()
+    }
+
+    async findById(id: string, options: any = {}) {
+        const { populate, select } = options;
+        let query = this.model.findById(id)
+        if (select) query = query.select(select)
+        if (populate) query = query.populate(populate)
+        return await query.exec()
+
+    }
+
+    async findOne(id: string, options: any = {}) {
+        const { populate, select } = options;
+        let query = this.model.findOne(id)
+        if (select) query = query.select(select)
+        if (populate) query = query.populate(populate)
+        return await query.exec()
+
+    }
+
+    async create(data: any) {
+        const document = new this.model(data)
+        return await document.save()
+    }
+
+    async updateById(id: string, updateData: any, options: any = {}) {
+        const defaultOptions = {
+            new: true,
+            ...options
+        }
+
+        return await this.model.findByIdAndUpdate(id, { ...updateData, upadatedAt: new Date() })
+    }
+
+    async deleteById(id: string) {
+        return await this.model.findByIdAndDelete(id)
+    }
+
+    async count(filters = {}) {
+        return await this.model.countDocuments(filters)
+    }
+
+     async findByName(name: string){
+        return await this.model.findOne({name})
+    }
+}
+
+export default BaseRepository
